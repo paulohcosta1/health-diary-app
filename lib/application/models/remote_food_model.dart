@@ -4,7 +4,7 @@ import 'package:meta/meta.dart';
 import '../../domain/entities/entities.dart';
 
 class RemoteFoodModel {
-   final String id;
+  final String id;
   final String name;
   final double protein;
   final double carb;
@@ -23,7 +23,9 @@ class RemoteFoodModel {
   });
 
   factory RemoteFoodModel.fromJson(Map json) {
-    if (!json.keys.toSet().containsAll(['id', 'name', 'protein', 'carb','fat' 'quantity'])) {
+    if (!json.keys
+        .toSet()
+        .containsAll(['id', 'name', 'protein', 'carb', 'fat', 'quantity'])) {
       throw HttpError.invalidData;
     }
     return RemoteFoodModel(
@@ -38,23 +40,22 @@ class RemoteFoodModel {
   }
 
   FoodEntity toEntity() => FoodEntity(
-    id: id,
-    name: name,
-    carb: carb,
-    protein: protein,
-    quantity: quantity,
-    fat: fat,
-    fiber: fiber,
-  );
+        id: id,
+        name: name,
+        carb: carb,
+        protein: protein,
+        quantity: quantity,
+        fat: fat,
+        fiber: fiber,
+      );
 
   Map<String, String> toJson() => {
-     'id': id,
-    'name': name,
-    'carb': carb.toString(),
-    'protein': protein.toString(),
-    'quantity': quantity.toString(),
-    'fat': fat.toString(),
-    'fiber': fiber.toString(),
-    
-  };
+        'id': id,
+        'name': name,
+        'carb': carb.toString(),
+        'protein': protein.toString(),
+        'quantity': quantity.toString(),
+        'fat': fat.toString(),
+        'fiber': fiber.toString(),
+      };
 }

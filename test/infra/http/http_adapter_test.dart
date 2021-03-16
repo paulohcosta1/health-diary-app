@@ -1,4 +1,5 @@
 import 'package:faker/faker.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:healthdiary/infra/http/http_adapter.dart';
 import 'package:http/http.dart';
@@ -60,7 +61,7 @@ void main() {
 
       final future = sut.request(url: url, method: 'get');
 
-      expect(future, throwsA(HttpError.serverError.toString()));
+      expect(future, throwsA(describeEnum(HttpError.serverError)));
     });
 
     test('Should return null if get returns 204', () async {
@@ -76,7 +77,7 @@ void main() {
 
       final future = sut.request(url: url, method: 'get');
 
-      expect(future, throwsA(HttpError.serverError.toString()));
+      expect(future, throwsA(describeEnum(HttpError.serverError)));
     });
   });
 }

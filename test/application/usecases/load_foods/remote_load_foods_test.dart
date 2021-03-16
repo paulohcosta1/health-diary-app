@@ -1,4 +1,5 @@
 import 'package:faker/faker.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:healthdiary/application/protocols/http/http.dart';
 import 'package:healthdiary/application/usecases/load_foods/remote_load_foods.dart';
@@ -104,7 +105,7 @@ void main() {
 
     final future = sut.load();
 
-    expect(future, throwsA(DomainError.unexpected));
+    expect(future, throwsA(describeEnum(DomainError.unexpected)));
   });
 
   test('Should throw UnexpectedError if HttpClient returns 404', () async {
@@ -112,7 +113,7 @@ void main() {
 
     final future = sut.load();
 
-    expect(future, throwsA(DomainError.unexpected));
+    expect(future, throwsA(describeEnum(DomainError.unexpected)));
   });
 
   test('Should throw UnexpectedError if HttpClient returns 500', () async {
@@ -120,6 +121,6 @@ void main() {
 
     final future = sut.load();
 
-    expect(future, throwsA(DomainError.unexpected));
+    expect(future, throwsA(describeEnum(DomainError.unexpected)));
   });
 }

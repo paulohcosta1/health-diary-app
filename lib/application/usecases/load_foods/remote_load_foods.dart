@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:healthdiary/application/models/remote_food_model.dart';
 import 'package:healthdiary/application/protocols/http/http.dart';
 import 'package:healthdiary/domain/errors/domain_error.dart';
@@ -17,8 +18,8 @@ class RemoteLoadFoods implements LoadFoods {
       return httpResponse
           .map<FoodEntity>((json) => RemoteFoodModel.fromJson(json).toEntity())
           .toList();
-    } on HttpError catch (error) {
-      throw DomainError.unexpected;
+    } on HttpError catch (_) {
+      throw describeEnum(DomainError.unexpected);
     }
   }
 }

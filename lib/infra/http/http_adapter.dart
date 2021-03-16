@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:flutter/foundation.dart';
 import 'package:http/http.dart';
 import 'package:meta/meta.dart';
 
@@ -32,7 +33,7 @@ class HttpAdapter implements HttpClient {
         response = await futureResponse.timeout(Duration(seconds: 10));
       }
     } catch (err) {
-      throw HttpError.serverError.toString();
+      throw describeEnum(HttpError.serverError);
     }
 
     return _handleResponse(response);
@@ -45,15 +46,15 @@ class HttpAdapter implements HttpClient {
       case 204:
         return null;
       case 400:
-        throw HttpError.badRequest.toString();
+        throw describeEnum(HttpError.badRequest);
       case 401:
-        throw HttpError.unauthorized.toString();
+        throw describeEnum(HttpError.unauthorized);
       case 403:
-        throw HttpError.forbidden.toString();
+        throw describeEnum(HttpError.forbidden);
       case 404:
-        throw HttpError.notFound.toString();
+        throw describeEnum(HttpError.notFound);
       default:
-        throw HttpError.serverError.toString();
+        throw describeEnum(HttpError.serverError);
     }
   }
 }

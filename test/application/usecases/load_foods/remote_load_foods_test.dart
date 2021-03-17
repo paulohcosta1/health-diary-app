@@ -7,34 +7,9 @@ import 'package:healthdiary/domain/entities/food_entity.dart';
 import 'package:healthdiary/domain/errors/domain_error.dart';
 import 'package:mockito/mockito.dart';
 
+import '../../../mocks/fake_foods_factory.dart';
+
 class HttpClientSpy extends Mock implements HttpClient {}
-
-class FakeSurveysFactory {
-  static List<Map> makeApiJson() => [
-        {
-          'id': faker.guid.guid(),
-          'name': faker.randomGenerator.string(50),
-          'carb': faker.randomGenerator.decimal(),
-          'protein': faker.randomGenerator.decimal(),
-          'quantity': faker.randomGenerator.decimal(),
-          'fat': faker.randomGenerator.decimal(),
-          'fiber': faker.randomGenerator.decimal(),
-        },
-        {
-          'id': faker.guid.guid(),
-          'name': faker.randomGenerator.string(50),
-          'carb': faker.randomGenerator.decimal(),
-          'protein': faker.randomGenerator.decimal(),
-          'quantity': faker.randomGenerator.decimal(),
-          'fat': faker.randomGenerator.decimal(),
-          'fiber': faker.randomGenerator.decimal(),
-        },
-      ];
-
-  static List<Map> makeInvalidApiJson() => [
-        {'invalid_key': 'invalid_value'}
-      ];
-}
 
 void main() {
   RemoteLoadFoods sut;
@@ -60,7 +35,7 @@ void main() {
     url = faker.internet.httpUrl();
     httpClient = HttpClientSpy();
     sut = RemoteLoadFoods(url: url, httpClient: httpClient);
-    mockHttpData(FakeSurveysFactory.makeApiJson());
+    mockHttpData(FakeFoodsFactory.makeApiJson());
   });
 
   test('Should call HttpClient with correct values', () async {
@@ -85,7 +60,7 @@ void main() {
         quantity: list[0]['quantity'],
         protein: list[0]['protein'],
         name: list[0]['name'],
-        fiber: list[0]['fiber'],
+        energy: list[0]['energy'],
       ),
       FoodEntity(
         id: list[1]['id'],
@@ -94,14 +69,15 @@ void main() {
         quantity: list[1]['quantity'],
         protein: list[1]['protein'],
         name: list[1]['name'],
-        fiber: list[1]['fiber'],
+        energy: list[1]['energy'],
       ),
     ]);
   });
+
   test(
       'Should throw UnexpectedError if HttpClient returns 200 with invalid data',
       () async {
-    mockHttpData(FakeSurveysFactory.makeInvalidApiJson());
+    mockHttpData(FakeFoodsFactory.makeInvalidApiJson());
 
     final future = sut.load();
 

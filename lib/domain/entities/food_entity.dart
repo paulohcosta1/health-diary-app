@@ -1,16 +1,16 @@
 import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
 
-class FoodEntity extends Equatable{
+class FoodEntity extends Equatable {
   final String id;
   final String name;
-  final double protein;
-  final double carb;
-  final double fat;
-  final double quantity;
-  final double fiber;
+  final num protein;
+  final num carb;
+  final num fat;
+  final num quantity;
+  final num energy;
 
-  List get props => [id, name, protein, carb,fat,quantity,fiber];
+  List get props => [id, name, protein, carb, fat, quantity, energy];
 
   FoodEntity({
     @required this.id,
@@ -19,6 +19,6 @@ class FoodEntity extends Equatable{
     @required this.carb,
     @required this.fat,
     @required this.quantity,
-    this.fiber,
+    @required this.energy,
   });
 }

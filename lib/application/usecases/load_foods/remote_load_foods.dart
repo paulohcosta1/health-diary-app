@@ -1,4 +1,5 @@
 import 'package:flutter/foundation.dart';
+import 'package:healthdiary/application/models/remote_food_answer_model.dart';
 import 'package:healthdiary/application/models/remote_food_model.dart';
 import 'package:healthdiary/application/protocols/http/http.dart';
 import 'package:healthdiary/domain/errors/domain_error.dart';
@@ -15,8 +16,10 @@ class RemoteLoadFoods implements LoadFoods {
   Future<List<FoodEntity>> load() async {
     try {
       final httpResponse = await httpClient.request(url: url, method: 'get');
-      return httpResponse
-          .map<FoodEntity>((json) => RemoteFoodModel.fromJson(json).toEntity())
+
+      return httpResponse['result']
+          .map<FoodEntity>(
+              (json) => RemoteFoodAnswerModel.fromJson(json).toEntity())
           .toList();
     } on HttpError catch (_) {
       throw describeEnum(DomainError.unexpected);
